@@ -29,25 +29,25 @@
 
 
 # Define default styles.
-: ${ZSH_HIGHLIGHT_STYLES[commits:softlimit]:=fg=173,bold}
-: ${ZSH_HIGHLIGHT_STYLES[commits:hardlimit]:=fg=red,bold}
+: ${ZSH_HIGHLIGHT_STYLES[commit:softlimit]:=fg=173,bold}
+: ${ZSH_HIGHLIGHT_STYLES[commit:hardlimit]:=fg=red,bold}
 
 # Whether the pattern highlighter should be called or not.
-_zsh_highlight_highlighter_commits_predicate(){
+_zsh_highlight_highlighter_commit_predicate(){
   [[ $(git_current_branch) != "" && _zsh_highlight_buffer_modified ]]
 }
 
 # Pattern syntax highlighting function.
-_zsh_highlight_highlighter_commits_paint(){
+_zsh_highlight_highlighter_commit_paint(){
   setopt localoptions
   local -a match mbegin mend
   local MATCH; integer MBEGIN MEND
   if [[ "$BUFFER" =~ "^g(it)? c(ommit -)?m \"" ]]; then
     local offset=${#MATCH}-1
     if [[ "$BUFFER" =~ "\"[^\"]{73,}\"?" ]]; then
-      _zsh_highlight_add_highlight $offset ${#MATCH}+$offset commits:hardlimit
+      _zsh_highlight_add_highlight $offset ${#MATCH}+$offset commit:hardlimit
     elif [[ "$BUFFER" =~ "\"[^\"]{51,72}\"?" ]]; then
-      _zsh_highlight_add_highlight $offset ${#MATCH}+$offset commits:softlimit
+      _zsh_highlight_add_highlight $offset ${#MATCH}+$offset commit:softlimit
     fi
   fi
 }
